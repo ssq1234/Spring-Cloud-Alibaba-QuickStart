@@ -1,0 +1,20 @@
+server:
+  port: 9097
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: 81.70.202.129:8848
+      discovery:
+        server-addr: ${spring.cloud.nacos.server-addr}
+    gateway:
+      routes:
+        - id: users_router    #指定路由唯一标识
+          uri: lb://users   #指定地址
+          predicates:
+            - Path=/user/**     #把以user开头的请求转发到用户服务（断言）
+        - id: books_router    #指定路由唯一标识
+          uri: lb://books   #指定地址
+          predicates:
+              - Path=/book/**     #把以user开头的请求转发到用户服务（断言）
